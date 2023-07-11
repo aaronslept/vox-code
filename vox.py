@@ -1,8 +1,8 @@
-import pygame as pg
+import pygame as x
 import random
 import math
 
-vec2, vec3 = pg.math.Vector2, pg.math.Vector3
+vec2, vec3 = x.math.Vector2, x.math.Vector3
 
 RES = WIDTH, HEIGHT = 1600, 900
 NUM_STARS = 1500
@@ -21,6 +21,7 @@ class Star:
         self.screen_pos = vec2(0, 0)
         self.size = 10
 
+    
     def get_pos3d(self, scale_pos=35):
         angle = random.uniform(0, 2 * math.pi)
         radius = random.randrange(HEIGHT // scale_pos, HEIGHT) * scale_pos
@@ -37,13 +38,13 @@ class Star:
         # rotate xy
         self.pos3d.xy = self.pos3d.xy.rotate(0.2)
         # mouse
-        #mouse_pos = CENTER - vec2(pg.mouse.get_pos())
+        #mouse_pos = CENTER - vec2(x.mouse.get_pos())
         #self.screen_pos += mouse_pos
 
     def draw(self):
         s = self.size
         if (-s < self.screen_pos.x < WIDTH + s) and (-s < self.screen_pos.y < HEIGHT + s):
-            pg.draw.rect(self.screen, self.color, (*self.screen_pos, self.size, self.size))
+            x.draw.rect(self.screen, self.color, (*self.screen_pos, self.size, self.size))
 
 
 class Starfield:
@@ -58,10 +59,10 @@ class Starfield:
 
 class App:
     def __init__(self):
-        self.screen = pg.display.set_mode(RES)
-        self.alpha_surface = pg.Surface(RES)
+        self.screen = x.display.set_mode(RES)
+        self.alpha_surface = x.Surface(RES)
         self.alpha_surface.set_alpha(ALPHA)
-        self.clock = pg.time.Clock()
+        self.clock = x.time.Clock()
         self.starfield = Starfield(self)
 
     def run(self):
@@ -70,8 +71,8 @@ class App:
             self.screen.blit(self.alpha_surface, (0, 0))
             self.starfield.run()
 
-            pg.display.flip()
-            [exit() for i in pg.event.get() if i.type == pg.QUIT]
+            x.display.flip()
+            [exit() for i in x.event.get() if i.type == x.QUIT]
             self.clock.tick(60)
 
 
